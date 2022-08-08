@@ -101,7 +101,7 @@ public class AlphaController {
     @RequestMapping(path = "/emp", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getEmp(){
-        Map<String, Object> emp = new HashMap<>();
+        Map<String, Object> emp = new HashMap<>(16);
         emp.put("name", "张三");
         emp.put("age", 23);
         emp.put("salary", 3000);
@@ -112,17 +112,17 @@ public class AlphaController {
     @ResponseBody
     public List<Map<String, Object>> getEmps(){
         List<Map<String, Object>> list = new ArrayList<>();
-        Map<String, Object> emp = new HashMap<>();
+        Map<String, Object> emp = new HashMap<>(16);
         emp.put("name", "张三");
         emp.put("age", 23);
         emp.put("salary", 3000);
         list.add(emp);
-        emp = new HashMap<>();
+        emp = new HashMap<>(16);
         emp.put("name", "李四");
         emp.put("age", 24);
         emp.put("salary", 4000);
         list.add(emp);
-        emp = new HashMap<>();
+        emp = new HashMap<>(16);
         emp.put("name", "John");
         emp.put("age", 23);
         emp.put("salary", 3000);
