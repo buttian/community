@@ -1,5 +1,7 @@
 package com.sss.community;
 
+import com.sss.community.dao.LoginTicketMapper;
+import com.sss.community.entity.LoginTicket;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -67,6 +69,32 @@ public class TestMapper {
         }
         int count = discussPostMapper.selectDiscussPostRows(0);
         System.out.println(count);
+    }
+
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
+
+    @Test
+    public void testInsert() {
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(1);
+        loginTicket.setStatus(0);
+        loginTicket.setTicket("dddd");
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000 * 60 *10));
+        int ret = loginTicketMapper.insertLoginTicket(loginTicket);
+        System.out.println(ret);
+    }
+
+    @Test
+    public void testSelectByTicket() {
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket("dddd");
+        System.out.println(loginTicket);
+    }
+
+    @Test
+    public void testUpdateStatus() {
+        int ret = loginTicketMapper.updateStatus("dddd", 1);
+        System.out.println(ret);
     }
 
 }
