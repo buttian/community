@@ -166,6 +166,12 @@ public class UserService implements CommunityConstant{
         return map;
     }
 
+    /**
+     * 登出
+     *
+     * @param ticket
+     * @return
+     */
     public void logout(String ticket) {
         loginTicketMapper.updateStatus(ticket, 1);
     }
@@ -178,6 +184,17 @@ public class UserService implements CommunityConstant{
      */
     public LoginTicket findLoginTicket(String ticket) {
         return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    /**
+     * 更新头像
+     *
+     * @param userId
+     * @param headerUrl
+     * @return
+     */
+    public int updateHeader(int userId, String headerUrl) {
+        return userMapper.updateHeader(userId, headerUrl);
     }
 
 }
