@@ -1,5 +1,6 @@
 package com.sss.community.dao;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -47,5 +48,18 @@ public interface CommentMapper {
             "where status=0 and entity_type = #{entityType} and entity_id = #{entityId}"
     })
     int selectCountByEntity(@Param("entityType") int entityType, @Param("entityId") int entityId);
+
+
+    /**
+     * 增加评论
+     *
+     * @param comment 评论对象
+     * @return 影响的行数
+     */
+    @Insert({
+            "insert into comment (user_id, entity_type, entity_id, target_id, content, status, create_time)",
+            "values (#{userId}, #{entityType}, #{entityId}, #{targetId}, #{content}, #{status}, #{createTime})"
+    })
+    int insertComment(Comment comment);
 
 }
