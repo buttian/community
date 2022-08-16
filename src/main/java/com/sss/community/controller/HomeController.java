@@ -1,5 +1,7 @@
 package com.sss.community.controller;
 
+import com.sss.community.service.LikeService;
+import com.sss.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private LikeService likeService;
     @GetMapping("/index")
 //    @ResponseBody
     public String getIndexPage(Model model, Page page){
@@ -34,6 +38,8 @@ public class HomeController {
                 Map<String, Object> map = new HashMap<>(16);
                 map.put("post", post);
                 User user = userService.findUserById(post.getUserId());
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount", likeCount);
                 map.put("user", user);
                 discussPosts.add(map);
             }

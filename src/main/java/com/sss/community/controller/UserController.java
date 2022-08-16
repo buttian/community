@@ -1,6 +1,7 @@
 package com.sss.community.controller;
 
 import com.sss.community.annotation.LoginRequired;
+import com.sss.community.service.LikeService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,9 @@ public class UserController {
 
     @Autowired
     private HostHolder hostHolder;
+
+    @Autowired
+    private LikeService likeService;
 
     /**
      * 跳转设置页面
@@ -128,7 +132,24 @@ public class UserController {
         }
     }
 
-
+    /**
+     * 用户主页
+     *
+     * @param userId
+     */
+    @GetMapping("/profile/{userId}")
+    public String getProfilePage(@PathVariable("userId") int userId, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在");
+        }
+        // 用户
+        model.addAttribute("user", user);
+        // 点赞数量
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+        return "/site/profile";
+    }
 
 
 }
