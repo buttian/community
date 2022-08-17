@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 import com.sss.community.entity.LoginTicket;
 
 @Mapper
+@Deprecated
 public interface LoginTicketMapper {
     /**
      * 插入login_ticket表
