@@ -1,7 +1,7 @@
 package com.sss.community.controller;
 
-import com.sss.community.entity.Comment;
-import com.sss.community.entity.Page;
+import com.sss.community.entity.*;
+import com.sss.community.event.EventProducer;
 import com.sss.community.service.CommentService;
 import com.sss.community.service.LikeService;
 import com.sss.community.service.UserService;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.sss.community.entity.DiscussPost;
-import com.sss.community.entity.User;
 import com.sss.community.service.DiscussPostService;
 import com.sss.community.util.CommunityUtil;
 import com.sss.community.util.HostHolder;
@@ -32,6 +30,8 @@ public class DiscussPostController implements CommunityConstant {
     private CommentService commentService;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private EventProducer eventProducer;
 
 
     /**
@@ -54,6 +54,14 @@ public class DiscussPostController implements CommunityConstant {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         // 报错的情况将来统一处理
         return CommunityUtil.getJSONString(0, "发布成功！");
