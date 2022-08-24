@@ -5,7 +5,11 @@ import com.sss.community.dao.UserMapper;
 import com.sss.community.entity.DiscussPost;
 import com.sss.community.entity.User;
 import com.sss.community.util.CommunityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import com.sss.community.dao.AlphaDao;
 import org.springframework.transaction.TransactionDefinition;
@@ -22,6 +26,8 @@ import java.util.Date;
 
 @Service
 public class AlphaService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlphaService.class);
 
     @Autowired
     private AlphaDao alphaDao;
@@ -115,5 +121,18 @@ public class AlphaService {
             }
         });
     }
+
+    // 让该方法在多线性环境下，被异步的调用
+    @Async
+    public void execute1() {
+        LOGGER.debug("execute1");
+    }
+
+    // 程序启动，任务调度线程池会自动调用该方法
+//    @Scheduled(initialDelay = 10000, fixedRate = 1000)
+    public void execute2() {
+        LOGGER.debug("execute2");
+    }
+
 
 }

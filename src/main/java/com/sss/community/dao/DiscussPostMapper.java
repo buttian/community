@@ -17,7 +17,7 @@ public interface DiscussPostMapper {
      * @param limit
      * @return
      */
-    List<DiscussPost> selectDiscussPosts(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit);
+    List<DiscussPost> selectDiscussPosts(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit,  @Param("orderMode") int orderMode);
 
     /**
      * <p>@Param注解用于给定参数取别名</p>
@@ -75,4 +75,12 @@ public interface DiscussPostMapper {
      * @return
      */
     int updateStatus(@Param("id") int id, @Param("status") int status);
+
+    /**
+     * 更新帖子分数
+     *
+     * @param id
+     * @param score
+     */
+    void updateScore(@Param("id") int id, @Param("score") double score);
 }
