@@ -82,5 +82,5 @@ public interface DiscussPostMapper {
      * @param id
      * @param score
      */
-    void updateScore(@Param("id") int id, @Param("score") double score);
+    int updateScore(@Param("id") int id, @Param("score") double score);
 }

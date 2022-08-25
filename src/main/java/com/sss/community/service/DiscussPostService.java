@@ -162,8 +162,8 @@ public class DiscussPostService {
      * @param id
      * @param score
      */
-    public void updateScore(int id, double score) {
-        discussPostMapper.updateScore(id, score);
+    public int updateScore(int id, double score) {
+        return discussPostMapper.updateScore(id, score);
     }
 
 }
